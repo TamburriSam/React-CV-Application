@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import Personal from "./components/Personal.js";
+//all this component is doing is housing the other components and running state if needed
 function App() {
+  const [input, setInput] = useState({
+    id: "",
+    name: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Personal />
     </div>
   );
 }
