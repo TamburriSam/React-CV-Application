@@ -1,3 +1,6 @@
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 var uniqid = require("uniqid");
 
@@ -59,6 +62,7 @@ function Personal() {
         edited: "submit",
       },
     });
+    console.log(e.target.value);
   }
 
   function submitHandleChange(e, todo) {
@@ -79,7 +83,9 @@ function Personal() {
     <form style={{ display: "flex", flexDirection: "column" }}>
       <div>
         <label>{PersonalInfo.name.name}</label>
-        <input
+        <TextField
+          label='Outlined'
+          variant='outlined'
           style={{ display: PersonalInfo.name.display }}
           placeholder={PersonalInfo.name.name}
           onChange={(e) => handleInputChange(e, PersonalInfo.name.id)}
@@ -90,15 +96,23 @@ function Personal() {
         </button> */}
 
         {PersonalInfo.name.edited === "edit" ? (
-          <button onClick={(e) => displayBlock(e)}>
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
+            onClick={(e) => displayBlock(e)}
+          >
             {PersonalInfo.name.edited}
-          </button>
+          </Button>
         ) : (
-          <button
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
             onClick={(e) => submitHandleChange(e, PersonalInfo.name.name)}
           >
             {PersonalInfo.name.edited}
-          </button>
+          </Button>
         )}
       </div>
 
@@ -109,22 +123,31 @@ function Personal() {
           placeholder={PersonalInfo.lastName.lastName}
           onChange={(e) => handleInputChange(e)}
         />
-        <button onClick={(e) => displayBlockLast(e)}>
+        <Button
+          variant='outlined'
+          size='small'
+          color='primary'
+          onClick={(e) => displayBlockLast(e)}
+        >
           {PersonalInfo.lastName.edited}
           {PersonalInfo.lastName.edited === "edit"
             ? console.log(true)
             : console.log(false)}
-        </button>
+        </Button>
       </div>
 
       <div>
         <label>{PersonalInfo.email}</label>
-        <button>Edit</button>
+        <Button variant='outlined' size='small' color='primary'>
+          Edit
+        </Button>
       </div>
 
       <div>
         <label>{PersonalInfo.phone}</label>
-        <button>Edit</button>
+        <Button size='small' color='primary' variant='outlined'>
+          Edit
+        </Button>
       </div>
     </form>
   );
