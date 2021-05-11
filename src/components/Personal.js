@@ -2,9 +2,13 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
+import Printpage from "./Printpage.js";
+import Education from "./Education.js";
+import Final from "./Final.js";
+
 var uniqid = require("uniqid");
 
-function Personal() {
+function Personal({ education }) {
   const [PersonalInfo, setPersonalInfo] = useState({
     id: uniqid(),
     name: {
@@ -19,14 +23,24 @@ function Personal() {
       display: "none",
       edited: "edit",
     },
-    email: "Email",
-    phone: "Phone",
+    email: {
+      email: "Email",
+      id: uniqid(),
+      display: "none",
+      edited: "edit",
+    },
+    phone: {
+      phone: "Phone",
+      id: uniqid(),
+      display: "none",
+      edited: "edit",
+    },
   });
 
   //next step- figure out where to put the setstates either app or here
 
   //name
-  function displayBlock(e) {
+  function displayName(e) {
     e.preventDefault();
 
     setPersonalInfo({
@@ -41,10 +55,11 @@ function Personal() {
     console.log(PersonalInfo);
   }
 
-  function displayBlockLast(e) {
+  function displayLastName(e) {
     setPersonalInfo({
       ...PersonalInfo,
       lastName: {
+        lastName: "Last Name",
         display: "block",
         edited: "submit",
       },
@@ -53,7 +68,33 @@ function Personal() {
     console.log(PersonalInfo);
   }
 
-  function handleInputChange(e, id) {
+  function displayEmail(e) {
+    setPersonalInfo({
+      ...PersonalInfo,
+      email: {
+        email: "Email",
+        display: "block",
+        edited: "submit",
+      },
+    });
+
+    console.log(PersonalInfo);
+  }
+
+  function displayPhone(e) {
+    setPersonalInfo({
+      ...PersonalInfo,
+      phone: {
+        phone: "Phone",
+        display: "block",
+        edited: "submit",
+      },
+    });
+
+    console.log(PersonalInfo);
+  }
+
+  function handleNameChange(e, id) {
     e.preventDefault();
     setPersonalInfo({
       ...PersonalInfo,
@@ -65,7 +106,43 @@ function Personal() {
     console.log(e.target.value);
   }
 
-  function submitHandleChange(e, todo) {
+  function handleLastNameChange(e, id) {
+    e.preventDefault();
+    setPersonalInfo({
+      ...PersonalInfo,
+      lastName: {
+        lastName: e.target.value,
+        edited: "submit",
+      },
+    });
+    console.log(e.target.value);
+  }
+
+  function handleEmailChange(e, id) {
+    e.preventDefault();
+    setPersonalInfo({
+      ...PersonalInfo,
+      email: {
+        email: e.target.value,
+        edited: "submit",
+      },
+    });
+    console.log(e.target.value);
+  }
+
+  function handlePhoneChange(e, id) {
+    e.preventDefault();
+    setPersonalInfo({
+      ...PersonalInfo,
+      phone: {
+        phone: e.target.value,
+        edited: "submit",
+      },
+    });
+    console.log(e.target.value);
+  }
+
+  function submitNameChange(e, todo) {
     e.preventDefault();
 
     setPersonalInfo({
@@ -79,28 +156,67 @@ function Personal() {
     console.log("we;re in");
   }
 
+  function submitLastNameChange(e, todo) {
+    e.preventDefault();
+
+    setPersonalInfo({
+      ...PersonalInfo,
+      lastName: {
+        lastName: todo,
+        display: "none",
+        edited: "edit",
+      },
+    });
+    console.log("we;re in");
+  }
+
+  function submitEmailChange(e, todo) {
+    e.preventDefault();
+    let regex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    if (regex.test(PersonalInfo.email.email)) {
+      setPersonalInfo({
+        ...PersonalInfo,
+        email: {
+          email: todo,
+          display: "none",
+          edited: "edit",
+        },
+      });
+    } else {
+      alert("invalid email");
+    }
+  }
+
+  function submitPhoneChange(e, todo) {
+    e.preventDefault();
+
+    setPersonalInfo({
+      ...PersonalInfo,
+      phone: {
+        phone: todo,
+        display: "none",
+        edited: "edit",
+      },
+    });
+    console.log("we;re in");
+  }
+
   return (
     <form style={{ display: "flex", flexDirection: "column" }}>
       <div>
         <label>{PersonalInfo.name.name}</label>
         <TextField
-          label='Outlined'
-          variant='outlined'
           style={{ display: PersonalInfo.name.display }}
           placeholder={PersonalInfo.name.name}
-          onChange={(e) => handleInputChange(e, PersonalInfo.name.id)}
+          onChange={(e) => handleNameChange(e, PersonalInfo.name.id)}
         />
-
-        {/*  <button onClick={(e) => displayBlock(e)}>
-          {PersonalInfo.name.edited}
-        </button> */}
 
         {PersonalInfo.name.edited === "edit" ? (
           <Button
             variant='outlined'
             size='small'
             color='primary'
-            onClick={(e) => displayBlock(e)}
+            onClick={(e) => displayName(e, "name")}
           >
             {PersonalInfo.name.edited}
           </Button>
@@ -109,11 +225,14 @@ function Personal() {
             variant='outlined'
             size='small'
             color='primary'
-            onClick={(e) => submitHandleChange(e, PersonalInfo.name.name)}
+            onClick={(e) => submitNameChange(e, PersonalInfo.name.name)}
           >
             {PersonalInfo.name.edited}
           </Button>
         )}
+        <Button variant='outlined' size='small' color='primary'>
+          Delete
+        </Button>
       </div>
 
       <div>
@@ -121,34 +240,107 @@ function Personal() {
         <input
           style={{ display: PersonalInfo.lastName.display }}
           placeholder={PersonalInfo.lastName.lastName}
-          onChange={(e) => handleInputChange(e)}
+          onChange={(e) => handleLastNameChange(e)}
         />
-        <Button
-          variant='outlined'
-          size='small'
-          color='primary'
-          onClick={(e) => displayBlockLast(e)}
-        >
-          {PersonalInfo.lastName.edited}
-          {PersonalInfo.lastName.edited === "edit"
-            ? console.log(true)
-            : console.log(false)}
-        </Button>
-      </div>
 
-      <div>
-        <label>{PersonalInfo.email}</label>
+        {PersonalInfo.lastName.edited === "edit" ? (
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
+            onClick={(e) => displayLastName(e)}
+          >
+            {PersonalInfo.lastName.edited}
+          </Button>
+        ) : (
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
+            onClick={(e) =>
+              submitLastNameChange(e, PersonalInfo.lastName.lastName)
+            }
+          >
+            {PersonalInfo.lastName.edited}
+          </Button>
+        )}
         <Button variant='outlined' size='small' color='primary'>
-          Edit
+          Delete
         </Button>
       </div>
 
       <div>
-        <label>{PersonalInfo.phone}</label>
-        <Button size='small' color='primary' variant='outlined'>
-          Edit
+        <label>{PersonalInfo.email.email}</label>
+        <input
+          style={{ display: PersonalInfo.email.display }}
+          placeholder={PersonalInfo.email.email}
+          onChange={(e) => handleEmailChange(e)}
+        />
+
+        {PersonalInfo.email.edited === "edit" ? (
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
+            onClick={(e) => displayEmail(e)}
+          >
+            {PersonalInfo.email.edited}
+          </Button>
+        ) : (
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
+            onClick={(e) => submitEmailChange(e, PersonalInfo.email.email)}
+          >
+            {PersonalInfo.email.edited}
+          </Button>
+        )}
+        <Button variant='outlined' size='small' color='primary'>
+          Delete
         </Button>
       </div>
+
+      <div>
+        <label>{PersonalInfo.phone.phone}</label>
+        <input
+          style={{ display: PersonalInfo.phone.display }}
+          placeholder={PersonalInfo.phone.phone}
+          onChange={(e) => handlePhoneChange(e)}
+        />
+
+        {PersonalInfo.phone.edited === "edit" ? (
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
+            onClick={(e) => displayPhone(e)}
+          >
+            {PersonalInfo.phone.edited}
+          </Button>
+        ) : (
+          <Button
+            variant='outlined'
+            size='small'
+            color='primary'
+            onClick={(e) => submitPhoneChange(e, PersonalInfo.phone.phone)}
+          >
+            {PersonalInfo.phone.edited}
+          </Button>
+        )}
+        <Button variant='outlined' size='small' color='primary'>
+          Delete
+        </Button>
+      </div>
+      <Education />
+      <Printpage
+        name={PersonalInfo.name.name}
+        lastName={PersonalInfo.lastName.lastName}
+        phone={PersonalInfo.phone.phone}
+        email={PersonalInfo.email.email}
+        PersonalInfo={PersonalInfo}
+        education={education}
+      />
     </form>
   );
 }
