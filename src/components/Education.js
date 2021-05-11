@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import Printpage from "./Printpage.js";
 import Personal from "./Personal.js";
-import Final from "./Final.js";
+import EduPrint from "./EduPrint.js";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 var uniqid = require("uniqid");
 
@@ -42,9 +44,18 @@ function Education() {
     },
   });
   return (
-    <div>
-      <h1>{education.school.school}</h1>
-      <Personal education={education} />
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div>
+        <label> {education.school.school} </label>
+        <TextField
+          style={{ display: education.school.display }}
+          placeholder={education.school.school}
+          onChange={{}}
+        />
+      </div>
+      <div>{education.degree.degree}</div>
+      <div>{education.major.major}</div>
+      <div>{education.datestart.datestart}</div>
     </div>
   );
 }

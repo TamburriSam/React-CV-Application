@@ -2,13 +2,13 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
-import Printpage from "./Printpage.js";
 import Education from "./Education.js";
-import Final from "./Final.js";
+import PrintPage from "./PrintPage.js";
 
 var uniqid = require("uniqid");
 
-function Personal({ education }) {
+//eventually move this into app, no need for separate things
+function Personal() {
   const [PersonalInfo, setPersonalInfo] = useState({
     id: uniqid(),
     name: {
@@ -198,11 +198,18 @@ function Personal({ education }) {
         edited: "edit",
       },
     });
-    console.log("we;re in");
+    console.log();
   }
 
   return (
-    <form style={{ display: "flex", flexDirection: "column" }}>
+    <form
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100vw",
+        textAlign: "center",
+      }}
+    >
       <div>
         <label>{PersonalInfo.name.name}</label>
         <TextField
@@ -333,13 +340,12 @@ function Personal({ education }) {
         </Button>
       </div>
       <Education />
-      <Printpage
+      <PrintPage
         name={PersonalInfo.name.name}
         lastName={PersonalInfo.lastName.lastName}
         phone={PersonalInfo.phone.phone}
         email={PersonalInfo.email.email}
         PersonalInfo={PersonalInfo}
-        education={education}
       />
     </form>
   );
