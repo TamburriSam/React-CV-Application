@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 import Education from "./Education.js";
 import PrintPage from "./PrintPage.js";
+import Work from "./Work.js";
 
 var uniqid = require("uniqid");
 
@@ -35,7 +36,50 @@ function Personal() {
       display: "none",
       edited: "edit",
     },
+    counter: 0,
   });
+  //ex
+  /*   delJob(e) {
+    data.career.splice(Number(e.target.id), 1);
+    this.setState({ data: data.career });
+} */
+
+  const [widgets, setWidgets] = useState([]);
+  const addWidget = () => {
+    let counter = 0;
+    let testarr = [];
+    // create an array
+    setWidgets((widgets) => [
+      ...widgets,
+      <Education
+        key={uniqid()}
+        widgets={widgets}
+        deleteWidget={deleteWidget}
+      />,
+    ]);
+
+    for (let i = 0; i < widgets.length; i++) {
+      testarr.push(counter++);
+    }
+    testarr.push(counter++);
+    console.log(testarr);
+    console.log("dddd", widgets);
+
+    //can access it within console json objec
+    //its like props.key
+  };
+
+  const deleteWidget = (e) => {
+    let point = widgets[widgets.length - 1];
+    let newArr = widgets.splice(widgets[widgets.length - 1]);
+
+    console.log(newArr);
+
+    setWidgets((widgets) => [...widgets, newArr]);
+    /*    let newarr = widgets.splice(0, 1);
+
+    console.log(newarr); */
+  };
 
   //next step- figure out where to put the setstates either app or here
 
@@ -244,7 +288,7 @@ function Personal() {
 
       <div>
         <label>{PersonalInfo.lastName.lastName}</label>
-        <input
+        <TextField
           style={{ display: PersonalInfo.lastName.display }}
           placeholder={PersonalInfo.lastName.lastName}
           onChange={(e) => handleLastNameChange(e)}
@@ -339,7 +383,22 @@ function Personal() {
           Delete
         </Button>
       </div>
-      <Education />
+      <Education widgets={widgets} deleteWidget={deleteWidget} />
+      {/* <Button onClick={deleteWidget}>Delete</Button> */}
+      <Button
+        variant='outlined'
+        size='small'
+        color='primary'
+        onClick={addWidget}
+      >
+        Add Education (Optional)
+      </Button>
+
+      {widgets.map((item, i) => (
+        <div key={i}>{item}</div>
+      ))}
+
+      <Work />
       <PrintPage
         name={PersonalInfo.name.name}
         lastName={PersonalInfo.lastName.lastName}

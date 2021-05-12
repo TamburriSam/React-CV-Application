@@ -7,11 +7,13 @@ import TextField from "@material-ui/core/TextField";
 
 var uniqid = require("uniqid");
 
-function Education() {
+function Education({ widgets, deleteWidget }) {
   const [education, setEducation] = useState({
     id: uniqid(),
     //graduated will be a toggle of date graduated? if toggled- display an input w date grad
     graduated: false,
+    display: "none",
+    edited: "edit",
     school: {
       school: "School",
       id: uniqid(),
@@ -43,20 +45,128 @@ function Education() {
       display: "none",
     },
   });
+
+  const showInput = (e) => {
+    setEducation({
+      ...education,
+      display: "block",
+      edited: "submit",
+    });
+  };
+
+  const changeDegree = (e) => {
+    setEducation({
+      ...education,
+      degree: {
+        degree: e.target.value,
+      },
+    });
+  };
+
+  const changeMajor = (e) => {
+    setEducation({
+      ...education,
+      major: {
+        major: e.target.value,
+      },
+    });
+  };
+
+  const changeDateStart = (e) => {
+    setEducation({
+      ...education,
+      datestart: {
+        datestart: e.target.value,
+      },
+    });
+  };
+
+  const changeSchool = (e, item) => {
+    setEducation({
+      ...education,
+      school: {
+        school: e.target.value,
+      },
+    });
+  };
+
+  const submitChange = (e) => {
+    e.preventDefault();
+
+    setEducation({
+      ...education,
+      display: "none",
+      edited: "edit",
+    });
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    /* might want to make this a form and have an onchange handler that modifies the state of the objects */
+    <form style={{ display: "flex", flexDirection: "column" }}>
       <div>
         <label> {education.school.school} </label>
         <TextField
-          style={{ display: education.school.display }}
-          placeholder={education.school.school}
-          onChange={{}}
+          onChange={(e) => changeSchool(e)}
+          style={{ display: education.display }}
         />
       </div>
-      <div>{education.degree.degree}</div>
-      <div>{education.major.major}</div>
-      <div>{education.datestart.datestart}</div>
-    </div>
+
+      <div>
+        {education.degree.degree}
+        <input
+          onChange={(e) => changeDegree(e)}
+          style={{ display: education.display }}
+          placeholder={education.degree.degree}
+        ></input>
+      </div>
+
+      <div>
+        {education.major.major}
+        <input
+          onChange={(e) => changeMajor(e)}
+          style={{ display: education.display }}
+        ></input>
+      </div>
+
+      <div>
+        {education.datestart.datestart}
+        <input
+          onChange={(e) => changeDateStart(e)}
+          style={{ display: education.display }}
+        ></input>
+      </div>
+
+      {education.edited === "edit" ? (
+        <Button
+          variant='outlined'
+          size='small'
+          color='primary'
+          onClick={showInput}
+        >
+          {education.edited}
+        </Button>
+      ) : (
+        <Button
+          variant='outlined'
+          size='small'
+          color='primary'
+          onClick={(e) => submitChange(e)}
+        >
+          {education.edited}
+        </Button>
+      )}
+
+      <div>
+        <Button
+          onClick={deleteWidget}
+          variant='outlined'
+          size='small'
+          color='primary'
+        >
+          Delete
+        </Button>
+      </div>
+    </form>
   );
 }
 

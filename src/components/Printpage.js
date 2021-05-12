@@ -45,9 +45,7 @@ function PrintPage({ PersonalInfo }) {
       display: "none",
     },
   });
-  function doSomething(e) {
-    e.preventDefault();
-  }
+
   return (
     <div style={{ border: "black 2px solid" }}>
       <h1>Print Preview</h1>
@@ -55,9 +53,9 @@ function PrintPage({ PersonalInfo }) {
       <br></br>
       {PersonalInfo.lastName.lastName}
       <br></br>
-      {education.school.school}
+      {/*       {education.school.school} */}
       <br></br>
-      {education.degree.degree}
+      {/*      {education.degree.degree} */}
     </div>
   );
 }
