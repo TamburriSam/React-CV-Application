@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Personal from "./Personal.js";
-import EduPrint from "./EduPrint.js";
+
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -14,6 +14,7 @@ function Education({ widgets, deleteWidget }) {
     graduated: false,
     display: "none",
     edited: "edit",
+    count: 0,
     school: {
       school: "School",
       id: uniqid(),
@@ -102,7 +103,7 @@ function Education({ widgets, deleteWidget }) {
 
   return (
     /* might want to make this a form and have an onchange handler that modifies the state of the objects */
-    <form style={{ display: "flex", flexDirection: "column" }}>
+    <form id={uniqid()} style={{ display: "flex", flexDirection: "column" }}>
       <div>
         <label> {education.school.school} </label>
         <TextField
@@ -158,7 +159,10 @@ function Education({ widgets, deleteWidget }) {
 
       <div>
         <Button
-          onClick={deleteWidget}
+          id={widgets.length}
+          onClick={(e) =>
+            deleteWidget(e.target.parentElement.parentElement.parentElement.id)
+          }
           variant='outlined'
           size='small'
           color='primary'

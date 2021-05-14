@@ -10,6 +10,8 @@ var uniqid = require("uniqid");
 
 //eventually move this into app, no need for separate things
 function Personal() {
+  const [widgets, setWidgets] = useState([""]);
+
   const [PersonalInfo, setPersonalInfo] = useState({
     id: uniqid(),
     name: {
@@ -44,41 +46,19 @@ function Personal() {
     this.setState({ data: data.career });
 } */
 
-  const [widgets, setWidgets] = useState([]);
+  const deleteWidget = (e) => {
+    setWidgets(widgets.splice(0, 1));
+
+    console.log(e.target.parentElement.id);
+  };
+
   const addWidget = () => {
-    let counter = 0;
-    let testarr = [];
     // create an array
     setWidgets((widgets) => [
       ...widgets,
-      <Education
-        key={uniqid()}
-        widgets={widgets}
-        deleteWidget={deleteWidget}
-      />,
+      <Education id={uniqid()} widgets={widgets} deleteWidget={deleteWidget} />,
     ]);
-
-    for (let i = 0; i < widgets.length; i++) {
-      testarr.push(counter++);
-    }
-    testarr.push(counter++);
-    console.log(testarr);
-    console.log("dddd", widgets);
-
-    //can access it within console json objec
-    //its like props.key
-  };
-
-  const deleteWidget = (e) => {
-    let point = widgets[widgets.length - 1];
-    let newArr = widgets.splice(widgets[widgets.length - 1]);
-
-    console.log(newArr);
-
-    setWidgets((widgets) => [...widgets, newArr]);
-    /*    let newarr = widgets.splice(0, 1);
-
-    console.log(newarr); */
+    console.log(widgets);
   };
 
   //next step- figure out where to put the setstates either app or here
@@ -246,7 +226,7 @@ function Personal() {
   }
 
   return (
-    <form
+    <div
       style={{
         display: "flex",
         flexDirection: "column",
@@ -285,7 +265,6 @@ function Personal() {
           Delete
         </Button>
       </div>
-
       <div>
         <label>{PersonalInfo.lastName.lastName}</label>
         <TextField
@@ -319,7 +298,6 @@ function Personal() {
           Delete
         </Button>
       </div>
-
       <div>
         <label>{PersonalInfo.email.email}</label>
         <input
@@ -351,7 +329,6 @@ function Personal() {
           Delete
         </Button>
       </div>
-
       <div>
         <label>{PersonalInfo.phone.phone}</label>
         <input
@@ -383,7 +360,7 @@ function Personal() {
           Delete
         </Button>
       </div>
-      <Education widgets={widgets} deleteWidget={deleteWidget} />
+      <Education widgets={widgets} deleteWidget={(e) => deleteWidget(e)} />
       {/* <Button onClick={deleteWidget}>Delete</Button> */}
       <Button
         variant='outlined'
@@ -393,20 +370,18 @@ function Personal() {
       >
         Add Education (Optional)
       </Button>
-
       {widgets.map((item, i) => (
         <div key={i}>{item}</div>
       ))}
-
       <Work />
-      <PrintPage
+      {/*       <PrintPage
         name={PersonalInfo.name.name}
         lastName={PersonalInfo.lastName.lastName}
         phone={PersonalInfo.phone.phone}
         email={PersonalInfo.email.email}
         PersonalInfo={PersonalInfo}
-      />
-    </form>
+      /> */}
+    </div>
   );
 }
 

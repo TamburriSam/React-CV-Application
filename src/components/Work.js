@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Personal from "./Personal.js";
-import EduPrint from "./EduPrint.js";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
