@@ -47,16 +47,47 @@ function Personal() {
 } */
 
   const deleteWidget = (e) => {
-    setWidgets(widgets.splice(0, 1));
+    //setWidgets(widgets.splice(0, 1));
 
-    console.log(e.target.parentElement.id);
+    //this is the answer
+    //console log n link
+
+    /*     console.log(e.currentTarget.id);
+
+    let deleted = e.currentTarget.id; */
+
+    //widgets.splice(1, 1);
+    /*    console.log(widgets);
+
+    const whoKnows = widgets.filter((item, index) => {
+      return item.id !== e.currentTarget.id;
+    });
+
+    console.log(whoKnows);
+
+    setWidgets( widgets: whoKnows ); */
+
+    /*  widgets.forEach((item) => {
+      console.log(item.props);
+      return item;
+    }); */
+
+    //console.log(e);
+
+    const id = e.currentTarget.id;
+    widgets.splice(id, 1);
+    setWidgets([...widgets]);
   };
 
   const addWidget = () => {
     // create an array
     setWidgets((widgets) => [
       ...widgets,
-      <Education id={uniqid()} widgets={widgets} deleteWidget={deleteWidget} />,
+      <Education
+        id={widgets.length}
+        widgets={widgets}
+        deleteWidget={deleteWidget}
+      />,
     ]);
     console.log(widgets);
   };

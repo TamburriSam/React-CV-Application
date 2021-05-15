@@ -89,6 +89,7 @@ function Education({ widgets, deleteWidget }) {
         school: e.target.value,
       },
     });
+    console.log(widgets);
   };
 
   const submitChange = (e) => {
@@ -103,7 +104,10 @@ function Education({ widgets, deleteWidget }) {
 
   return (
     /* might want to make this a form and have an onchange handler that modifies the state of the objects */
-    <form id={uniqid()} style={{ display: "flex", flexDirection: "column" }}>
+    <form
+      id={widgets.length}
+      style={{ display: "flex", flexDirection: "column" }}
+    >
       <div>
         <label> {education.school.school} </label>
         <TextField
@@ -160,9 +164,7 @@ function Education({ widgets, deleteWidget }) {
       <div>
         <Button
           id={widgets.length}
-          onClick={(e) =>
-            deleteWidget(e.target.parentElement.parentElement.parentElement.id)
-          }
+          onClick={(e) => deleteWidget(e)}
           variant='outlined'
           size='small'
           color='primary'
