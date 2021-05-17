@@ -40,43 +40,12 @@ function Personal() {
     },
     counter: 0,
   });
-  //ex
-  /*   delJob(e) {
-    data.career.splice(Number(e.target.id), 1);
-    this.setState({ data: data.career });
-} */
 
   const deleteWidget = (e) => {
-    //setWidgets(widgets.splice(0, 1));
-
-    //this is the answer
-    //console log n link
-
-    /*     console.log(e.currentTarget.id);
-
-    let deleted = e.currentTarget.id; */
-
-    //widgets.splice(1, 1);
-    /*    console.log(widgets);
-
-    const whoKnows = widgets.filter((item, index) => {
-      return item.id !== e.currentTarget.id;
-    });
-
-    console.log(whoKnows);
-
-    setWidgets( widgets: whoKnows ); */
-
-    /*  widgets.forEach((item) => {
-      console.log(item.props);
-      return item;
-    }); */
-
-    //console.log(e);
-
     const id = e.currentTarget.id;
     widgets.splice(id, 1);
     setWidgets([...widgets]);
+    console.log(id);
   };
 
   const addWidget = () => {
@@ -257,22 +226,18 @@ function Personal() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100vw",
-        textAlign: "center",
-      }}
-    >
-      <div>
-        <label>{PersonalInfo.name.name}</label>
+    <div style={{}}>
+      <div style={{ fontSize: "40px" }}>
+        {/* NAME NAME NAME NAME */}
+        <label style={{ marginRight: "20px" }}>{PersonalInfo.name.name}</label>
+        <label>{PersonalInfo.lastName.lastName}</label>
+        <br></br>
         <TextField
           style={{ display: PersonalInfo.name.display }}
           placeholder={PersonalInfo.name.name}
           onChange={(e) => handleNameChange(e, PersonalInfo.name.id)}
         />
-
+        <br></br>
         {PersonalInfo.name.edited === "edit" ? (
           <Button
             variant='outlined'
@@ -295,9 +260,9 @@ function Personal() {
         <Button variant='outlined' size='small' color='primary'>
           Delete
         </Button>
-      </div>
-      <div>
-        <label>{PersonalInfo.lastName.lastName}</label>
+
+        {/* LAST NAME LAST NAME  */}
+
         <TextField
           style={{ display: PersonalInfo.lastName.display }}
           placeholder={PersonalInfo.lastName.lastName}
@@ -310,6 +275,7 @@ function Personal() {
             size='small'
             color='primary'
             onClick={(e) => displayLastName(e)}
+            style={{ marginLeft: "80px" }}
           >
             {PersonalInfo.lastName.edited}
           </Button>
@@ -329,7 +295,11 @@ function Personal() {
           Delete
         </Button>
       </div>
+
+      {/* EMAIL EMAIL */}
+
       <div>
+        <br></br>
         <label>{PersonalInfo.email.email}</label>
         <input
           style={{ display: PersonalInfo.email.display }}
@@ -367,6 +337,8 @@ function Personal() {
           placeholder={PersonalInfo.phone.phone}
           onChange={(e) => handlePhoneChange(e)}
         />
+
+        {/* PHONE PHONE */}
 
         {PersonalInfo.phone.edited === "edit" ? (
           <Button

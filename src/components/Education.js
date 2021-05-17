@@ -106,7 +106,11 @@ function Education({ widgets, deleteWidget }) {
     /* might want to make this a form and have an onchange handler that modifies the state of the objects */
     <form
       id={widgets.length}
-      style={{ display: "flex", flexDirection: "column" }}
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
     >
       <div>
         <label> {education.school.school} </label>
